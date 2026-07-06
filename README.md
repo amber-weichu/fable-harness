@@ -10,6 +10,8 @@ Fable Harness is a small kit — a few hooks, a skill, and some sub-agents — t
 
 Think of it as a behavioral floor, not a framework. It doesn't plan your sprints or run your CI pipeline — it just keeps the agent honest, careful, and verifiable while it works.
 
+This protocol only transplants discipline, not the subject it serves — before serving a specific person, read that person's HANDOFF document first (e.g. lobster-docs' 00_HANDOFF.md).
+
 ## Why
 
 This kit is distilled from the second open release of Fable (Anthropic's Fable model) — the careful, disciplined way that model approached tasks. Rather than keep that discipline locked inside one model, this kit extracts it into a reusable protocol and uses it to reinforce the working harness around Opus (and other Claude models), so they operate the same disciplined way, session after session, regardless of which model happens to be driving.
