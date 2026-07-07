@@ -15,6 +15,13 @@ import re
 import sys
 from pathlib import PurePath
 
+try:
+    # Windows 非 UTF-8 主控台（如繁中 cp950）印出 emoji/中文會 UnicodeEncodeError，
+    # 被下面的 fail-open except 吞掉 → gate 永遠不會真的擋，且不會有任何錯誤訊息。
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 CODE_EXTS = {
     ".py", ".js", ".ts", ".tsx", ".jsx", ".mjs", ".cjs",
     ".sh", ".ps1", ".psm1", ".vbs",

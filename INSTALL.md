@@ -14,6 +14,10 @@ git clone <this-repo-url> fable-harness
 
 You don't need to put it in any special location — just remember the path, since the global hooks will point back at it.
 
+> ⚠️ **If you ever move this repo after installing**, the three absolute paths written into `~/.claude/settings.json` (or the project's own `.claude/settings.json`) do NOT update themselves. Grep that file for the old path and repoint all three `command` strings to the new location — then trigger each hook once (a session start, a prompt, and a Stop after an unstested code edit) to confirm they still fire. A hook that silently fails to fire looks identical to "nothing to report" — treat a missing/empty hook result as a bug to investigate, not a quiet pass.
+>
+> ⚠️ **Windows non-UTF-8 console codepages (e.g. Traditional Chinese `cp950`) can silently kill `verify_gate.py`.** The block message contains a `⛔` emoji; if the process's `sys.stdout` encoding can't represent it, `print()` raises `UnicodeEncodeError` — which the gate's own fail-open `except Exception: pass` swallows completely. The result: the Stop hook returns exit 0 with *zero output*, indistinguishable from "nothing to block." This was caught by actually running `tests/test_verify_gate.py::test_t1_edit_py_without_test_blocks` on a Windows/cp950 machine (it failed with a `JSONDecodeError` on empty stdout) rather than assuming the hook worked from previous UTF-8-default (macOS/Linux) test runs. Fixed by reconfiguring stdout to UTF-8 at the top of `verify_gate.py`. If you install on Windows, re-run the test suite there — don't trust results from a different OS.
+
 ## Install
 
 Open Claude Code inside (or pointed at) the cloned repo, and say:
